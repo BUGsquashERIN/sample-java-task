@@ -46,6 +46,10 @@ jobs:
           --version-label "$VERSION_LABEL" \
           --source-bundle S3Bucket=${{ secrets.S3_BUCKET_NAME }},S3Key=application.jar \
           --region ${{ secrets.AWS_REGION }}
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
 
     - name: Deploy new version to EB
       run: |
@@ -54,3 +58,7 @@ jobs:
           --environment-name "${{ secrets.EB_ENV_NAME }}" \
           --version-label "$VERSION_LABEL" \
           --region ${{ secrets.AWS_REGION }}
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
