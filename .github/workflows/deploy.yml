@@ -38,10 +38,13 @@ jobs:
         AWS_REGION: ${{ secrets.AWS_REGION }}
         SOURCE_DIR: "deploy"
 
-    - name: Create new EB Application Version
+    - name: Generate unique version label
       run: |
         VERSION_LABEL="app-$(date +%s)"
         echo "VERSION_LABEL=$VERSION_LABEL" >> $GITHUB_ENV
+
+    - name: Create new EB Application Version
+      run: |
         aws elasticbeanstalk create-application-version \
           --application-name "${{ secrets.EB_APP_NAME }}" \
           --version-label "$VERSION_LABEL" \
@@ -62,4 +65,3 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ${{ secrets.AWS_REGION }}
-
